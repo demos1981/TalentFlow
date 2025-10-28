@@ -1,0 +1,108 @@
+/* ===== AUTH CALLBACK STYLES ===== */
+
+.auth-callback-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-4);
+  background: linear-gradient(135deg, var(--color-primary-50) 0%, var(--color-secondary-50) 100%);
+}
+
+.auth-callback-card {
+  background: white;
+  border-radius: var(--border-radius-2xl);
+  padding: var(--spacing-8);
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--color-secondary-200);
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-callback-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-primary-500), var(--color-primary-600));
+}
+
+.auth-callback-error,
+.auth-callback-loading,
+.auth-callback-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-4);
+}
+
+.auth-callback-error h2,
+.auth-callback-loading h2,
+.auth-callback-success h2 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  margin: 0;
+}
+
+.auth-callback-error p,
+.auth-callback-loading p,
+.auth-callback-success p {
+  color: var(--color-secondary-600);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Icons */
+.auth-callback-error .icon,
+.auth-callback-loading .icon,
+.auth-callback-success .icon {
+  width: 64px;
+  height: 64px;
+}
+
+.error-icon {
+  color: var(--color-error-500);
+}
+
+.loading-icon {
+  color: var(--color-primary-500);
+  animation: spin 1s linear infinite;
+}
+
+.success-icon {
+  color: var(--color-success-500);
+}
+
+/* Loading animation */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .auth-callback-card {
+    padding: var(--spacing-6);
+    margin: var(--spacing-4);
+  }
+  
+  .auth-callback-error h2,
+  .auth-callback-loading h2,
+  .auth-callback-success h2 {
+    font-size: var(--font-size-xl);
+  }
+}
+
+
+
+
+
