@@ -1,0 +1,21 @@
+{
+  "name": "talentflow-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "cd talentflow-next && npm run build",
+    "dev": "cd talentflow-next && npm run dev",
+    "start": "cd talentflow-next && npm run start"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "@sendgrid/mail": "^8.1.6",
+    "@stripe/react-stripe-js": "^5.2.0",
+    "@stripe/stripe-js": "^8.0.0",
+    "cheerio": "^1.1.2",
+    "critters": "^0.0.23",
+    "jspdf": "^3.0.3",
+    "next": "^16.0.1",
+    "stripe": "^19.1.0"
+  }
+}

@@ -1,0 +1,376 @@
+/* Стилі для сторінки кандидатів */
+
+.candidates-list {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.candidate-card {
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.candidate-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.candidate-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.candidate-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.candidate-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.candidate-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.candidate-details {
+  flex: 1;
+}
+
+.candidate-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: var(--text-color);
+}
+
+.candidate-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.candidate-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.relevance-score {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--success-color-alpha);
+  color: var(--success-color);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.candidate-action-btn {
+  background: none;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 0.5rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.candidate-action-btn:hover {
+  background: var(--surface-hover);
+  color: var(--text-color);
+  border-color: var(--primary-color);
+}
+
+.candidate-details-row {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.candidate-detail-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.candidate-bio {
+  color: var(--text-color);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.candidate-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.candidate-skill {
+  background: var(--primary-color-alpha);
+  color: var(--primary-color);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--border-radius);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.candidate-education {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.candidate-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.candidate-actions-main {
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* Адаптивність */
+@media (max-width: 768px) {
+  .candidate-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .candidate-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .candidate-details-row {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .candidate-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .candidate-actions-main {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .candidate-card {
+    padding: 1rem;
+  }
+  
+  .candidate-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  
+  .candidate-avatar {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+/* Анімації */
+.candidate-card {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Ховер ефекти */
+.candidate-skill:hover {
+  background: var(--primary-color);
+  color: white;
+  transform: scale(1.05);
+}
+
+.relevance-score:hover {
+  transform: scale(1.05);
+}
+
+/* Фокус стани для доступності */
+.candidate-action-btn:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.candidate-skill:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Location Search Styles */
+.location-search-container {
+  position: relative;
+  width: 100%;
+}
+
+.location-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 0.75rem 1rem;
+  transition: all 0.2s ease;
+}
+
+.location-input-wrapper:focus-within {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.location-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--text-muted);
+  margin-right: 0.5rem;
+  flex-shrink: 0;
+}
+
+.location-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.875rem;
+  color: var(--text-color);
+  width: 100%;
+}
+
+.location-input::placeholder {
+  color: var(--text-muted);
+}
+
+.clear-location-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: none;
+  background: var(--text-muted);
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-left: 0.5rem;
+  flex-shrink: 0;
+}
+
+.clear-location-btn:hover {
+  background: var(--text-color);
+}
+
+.clear-icon {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+.location-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-top: none;
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+  box-shadow: var(--shadow-lg);
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.location-suggestion {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.location-suggestion:last-child {
+  border-bottom: none;
+}
+
+.location-suggestion:hover {
+  background: var(--background-color);
+}
+
+.suggestion-icon {
+  width: 1rem;
+  height: 1rem;
+  color: var(--text-muted);
+  margin-right: 0.5rem;
+  flex-shrink: 0;
+}
+
+.location-suggestion span {
+  font-size: 0.875rem;
+  color: var(--text-color);
+}
+
+
+
+
+
+

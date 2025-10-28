@@ -1,0 +1,162 @@
+/* Stripe Checkout Styles */
+
+.stripe-checkout {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: var(--space-6);
+  background: var(--color-bg-card);
+  border-radius: var(--border-radius-lg);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.checkout-header {
+  text-align: center;
+  margin-bottom: var(--space-6);
+}
+
+.checkout-header h3 {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0 0 var(--space-2) 0;
+}
+
+.checkout-header p {
+  font-size: var(--font-size-base);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.checkout-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.card-element-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.card-element-label {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+/* Stripe Loading */
+.stripe-loading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  background: var(--color-bg-secondary);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+/* Stripe Card Element Styling */
+.StripeElement {
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-lg);
+  background: white;
+  transition: border-color 0.2s ease;
+}
+
+.StripeElement--focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.StripeElement--invalid {
+  border-color: var(--color-danger);
+}
+
+.StripeElement--complete {
+  border-color: var(--color-success);
+}
+
+.checkout-actions {
+  display: flex;
+  gap: var(--space-4);
+  justify-content: flex-end;
+}
+
+.btn-cancel,
+.btn-pay {
+  padding: var(--space-3) var(--space-6);
+  border: none;
+  border-radius: var(--border-radius-lg);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-width: 120px;
+}
+
+.btn-cancel {
+  background: var(--color-bg-secondary);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+}
+
+.btn-cancel:hover:not(:disabled) {
+  background: var(--color-border);
+}
+
+.btn-pay {
+  background: var(--color-success);
+  color: white;
+}
+
+.btn-pay:hover:not(:disabled) {
+  background: var(--color-success-dark);
+  transform: translateY(-1px);
+}
+
+.btn-pay:disabled,
+.btn-cancel:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .stripe-checkout {
+    padding: var(--space-4);
+    margin: var(--space-4);
+  }
+
+  .checkout-actions {
+    flex-direction: column;
+  }
+
+  .btn-cancel,
+  .btn-pay {
+    width: 100%;
+  }
+}

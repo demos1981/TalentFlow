@@ -1,0 +1,332 @@
+.search-filters {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.filters-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  background: #f8fafc;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.filters-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.filters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  padding: 24px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.filter-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.95rem;
+}
+
+.filter-icon {
+  width: 18px;
+  height: 18px;
+  color: #6b7280;
+}
+
+/* Skills Filter */
+.skills-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px;
+}
+
+.skill-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.skill-checkbox:hover {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+.skill-checkbox input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #3b82f6;
+}
+
+.skill-name {
+  flex: 1;
+  color: #374151;
+}
+
+.selected-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.selected-skill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: #dbeafe;
+  color: #1e40af;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.remove-skill {
+  background: none;
+  border: none;
+  color: #1e40af;
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.remove-skill:hover {
+  background: rgba(30, 64, 175, 0.1);
+}
+
+/* Location Filters */
+.location-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-input {
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s ease;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-select {
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.form-select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Experience Filters */
+.experience-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.range-inputs {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.range-separator {
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* Salary Filters */
+.salary-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Work Type Filters */
+.work-type-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 8px 0;
+  font-size: 0.95rem;
+  color: #374151;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #3b82f6;
+}
+
+/* Active Filters */
+.active-filters {
+  padding: 20px 24px;
+  background: #f8fafc;
+  border-top: 1px solid #e5e7eb;
+}
+
+.active-filters h4 {
+  margin: 0 0 16px 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.active-filters-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.active-filter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: #dbeafe;
+  color: #1e40af;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.remove-filter {
+  background: none;
+  border: none;
+  color: #1e40af;
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.remove-filter:hover {
+  background: rgba(30, 64, 175, 0.1);
+}
+
+/* Loading State */
+.loading {
+  color: #6b7280;
+  font-style: italic;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .filters-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .filters-header {
+    padding: 16px 20px;
+  }
+  
+  .active-filters {
+    padding: 16px 20px;
+  }
+  
+  .skills-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+  
+  .range-inputs {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .range-separator {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .filters-grid {
+    padding: 16px;
+  }
+  
+  .filters-header {
+    padding: 12px 16px;
+  }
+  
+  .active-filters {
+    padding: 12px 16px;
+  }
+  
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .selected-skills {
+    justify-content: center;
+  }
+  
+  .active-filters-list {
+    justify-content: center;
+  }
+}
+
+
+
+
+
+
