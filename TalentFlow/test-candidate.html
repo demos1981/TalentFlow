@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Candidate Profile</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .candidate-info { background: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .error { background: #ffebee; color: #c62828; padding: 15px; border-radius: 8px; margin: 20px 0; }
+        .success { background: #e8f5e8; color: #2e7d32; padding: 15px; border-radius: 8px; margin: 20px 0; }
+        button { background: #1976d2; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; margin: 10px 5px; }
+        button:hover { background: #1565c0; }
+        pre { background: #f5f5f5; padding: 15px; border-radius: 4px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Test Candidate Profile Access</h1>
+        
+        <div>
+            <h3>Set Token</h3>
+            <input type="text" id="tokenInput" placeholder="Enter token" style="width: 500px; padding: 8px;">
+            <button onclick="setToken()">Set Token</button>
+            <button onclick="clearToken()">Clear Token</button>
+        </div>
+
+        <div>
+            <h3>Test API</h3>
+            <button onclick="testCandidateAPI()">Test Candidate API</button>
+            <button onclick="testAI()">Test AI Matching</button>
+        </div>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const EMPLOYER_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZTI1NzdiLWMzOTQtNDMwMy1hMmI4LThmODY5YWM5NWY5NiIsImlhdCI6MTc2MDU0NTcwMywiZXhwIjoxNzYxMTUwNTAzfQ.NrhVJvS5ep194Tc1lenLoeo61PuEAk2-Z64G1UFbD-4';
+        const CANDIDATE_ID = 'ac08343f-83a6-4e32-9866-6d97fcc4bac7';
+        const JOB_ID = 'ffa78c7e-6c66-44c5-926a-83f86830aedd';
+
+        function setToken() {
+            const token = document.getElementById('tokenInput').value || EMPLOYER_TOKEN;
+            localStorage.setItem('accessToken', token);
+            showResult('Token set successfully!', 'success');
+        }
+
+        function clearToken() {
+            localStorage.removeItem('accessToken');
+            showResult('Token cleared!', 'success');
+        }
+
+        async function testCandidateAPI() {
+            try {
+                const token = localStorage.getItem('accessToken');
+                if (!token) {
+                    showResult('No token found! Please set a token first.', 'error');
+                    return;
+                }
+
+                const response = await fetch(`http://localhost:3002/api/candidates/${CANDIDATE_ID}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResult(`✅ Candidate API Success!\n\n${JSON.stringify(data, null, 2)}`, 'success');
+                } else {
+                    showResult(`❌ Candidate API Error (${response.status}):\n\n${JSON.stringify(data, null, 2)}`, 'error');
+                }
+            } catch (error) {
+                showResult(`❌ Network Error:\n\n${error.message}`, 'error');
+            }
+        }
+
+        async function testAI() {
+            try {
+                const token = localStorage.getItem('accessToken');
+                if (!token) {
+                    showResult('No token found! Please set a token first.', 'error');
+                    return;
+                }
+
+                const response = await fetch(`http://localhost:3002/api/optimized-ai-matching/jobs/${JOB_ID}/matches?vectorTopK=50&aiTopK=1&minVectorSimilarity=0.3&minAiScore=70&language=uk`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResult(`✅ AI Matching Success!\n\n${JSON.stringify(data, null, 2)}`, 'success');
+                } else {
+                    showResult(`❌ AI Matching Error (${response.status}):\n\n${JSON.stringify(data, null, 2)}`, 'error');
+                }
+            } catch (error) {
+                showResult(`❌ Network Error:\n\n${error.message}`, 'error');
+            }
+        }
+
+        function showResult(message, type) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `<div class="${type}"><pre>${message}</pre></div>`;
+        }
+
+        // Auto-set token on load
+        window.onload = function() {
+            document.getElementById('tokenInput').value = EMPLOYER_TOKEN;
+            setToken();
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,261 @@
+/* ===== MAIN CSS IMPORTS ===== */
+
+/* Design System Variables */
+@import './variables.css';
+
+/* Base Styles */
+@import './base.css';
+
+/* Layout Components */
+@import './layout.css';
+
+/* Card Styles */
+@import './cards.css';
+
+/* Dashboard Specific Styles */
+@import './dashboard.css';
+
+/* Component Fixes */
+@import './components-fix.css';
+
+/* Layout Fix - Flexbox */
+@import './layout-fix.css';
+
+/* Pages Specific Styles */
+@import './pages.css';
+
+/* Authentication Styles */
+@import './auth.css';
+
+/* OAuth Callback Styles */
+@import './auth-callback.css';
+
+/* AI Matching Styles */
+@import './ai-matching.css';
+
+/* Tailwind CSS - тимчасово вимкнено */
+/* @import './tailwind.css'; */
+
+/* Language Switcher */
+@import './language-switcher.css';
+
+/* Animations */
+@import './animations.css';
+
+/* Calendar Styles */
+@import './calendar.css';
+
+/* Job Creation Styles */
+@import './job-creation.css';
+
+/* Filters and Search Styles */
+@import './filters.css';
+
+/* Candidate Search Styles */
+@import './candidates.css';
+
+/* Settings Styles */
+@import './settings.css';
+
+/* Documentation Styles */
+@import './docs.css';
+
+/* Help Styles */
+@import './help.css';
+
+
+/* Automation Styles */
+@import './automation.css';
+
+/* Performance Styles */
+@import './performance.css';
+
+/* Analytics Styles */
+@import './analytics.css';
+
+/* Interviews Styles */
+@import './interviews.css';
+
+/* ===== GLOBAL OVERRIDES ===== */
+
+/* Ensure proper font loading */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* Global auth button overrides */
+.auth-submit-btn {
+  background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-600));
+  color: white;
+  border: 2px solid var(--color-primary-500);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.auth-submit-btn:hover {
+  background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-700));
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-xl);
+}
+
+.dark .auth-submit-btn {
+  background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-700));
+  color: white;
+  border-color: var(--color-primary-600);
+}
+
+.dark .auth-submit-btn:hover {
+  background: linear-gradient(135deg, var(--color-primary-700), var(--color-primary-800));
+  color: white;
+}
+
+/* ===== CUSTOM SCROLLBAR ===== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-gray-100);
+  border-radius: var(--border-radius-full);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-gray-300);
+  border-radius: var(--border-radius-full);
+  transition: background-color var(--transition-normal);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gray-400);
+}
+
+/* ===== SMOOTH SCROLLING ===== */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ===== SELECTION STYLES ===== */
+::selection {
+  background-color: var(--color-primary-200);
+  color: var(--color-primary-900);
+}
+
+::-moz-selection {
+  background-color: var(--color-primary-200);
+  color: var(--color-primary-900);
+}
+
+/* ===== FOCUS VISIBLE ===== */
+.focus-visible:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--color-primary-100);
+  border-radius: var(--border-radius-sm);
+}
+
+/* ===== UTILITY CLASSES ===== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* ===== RESPONSIVE UTILITIES ===== */
+@media (max-width: 640px) {
+  .hidden-sm { display: none !important; }
+}
+
+@media (max-width: 768px) {
+  .hidden-md { display: none !important; }
+}
+
+@media (max-width: 1024px) {
+  .hidden-lg { display: none !important; }
+}
+
+@media (min-width: 641px) {
+  .visible-sm { display: none !important; }
+}
+
+@media (min-width: 769px) {
+  .visible-md { display: none !important; }
+}
+
+@media (min-width: 1025px) {
+  .visible-lg { display: none !important; }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+  * {
+    background: transparent !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+  
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+  
+  abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+  
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+  
+  thead {
+    display: table-header-group;
+  }
+  
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+  
+  img {
+    max-width: 100% !important;
+  }
+  
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+  
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+}
+
+

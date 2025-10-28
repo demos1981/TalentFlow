@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  # База даних PostgreSQL
+  db:
+    image: postgres:15-alpine
+    container_name: talentmatch_db
+    environment:
+      POSTGRES_DB: talentmatch
+      POSTGRES_USER: talentmatch_user
+      POSTGRES_PASSWORD: talentmatch_password
+    ports:
+      - "5438:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U talentmatch_user -d talentmatch"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # Backend API
+  backend:
+    build: ./backend
+    container_name: talentmatch_backend
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: talentmatch
+      DB_USER: talentmatch_user
+      DB_PASSWORD: talentmatch_password
+      JWT_SECRET: your-super-secret-jwt-key-change-in-production
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # Веб-додаток
+  web:
+    build: ./web
+    container_name: talentmatch_web
+    environment:
+      VITE_API_URL: http://localhost:3000
+    ports:
+      - "3100:3002"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  default:
+    name: talentmatch_network
