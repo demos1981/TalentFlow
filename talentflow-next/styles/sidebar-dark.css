@@ -1,0 +1,65 @@
+/* ===== DARK MODE STYLES FOR SIDEBAR ===== */
+.dark .sidebar {
+  background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-surface-secondary) 100%);
+  border-right-color: var(--color-border);
+}
+
+.dark .sidebar-logo {
+  background: linear-gradient(135deg, var(--color-primary-600) 0%, var(--color-primary-700) 100%);
+  color: var(--color-text-inverse);
+}
+
+.dark .sidebar-nav-section-title {
+  background: var(--color-surface-tertiary);
+  border-color: var(--color-border);
+  color: var(--color-text-tertiary);
+}
+
+.dark .sidebar-nav-item {
+  color: var(--color-text-secondary);
+}
+
+.dark .sidebar-nav-item:hover {
+  background: var(--color-surface-hover);
+  color: var(--color-text-primary);
+}
+
+.dark .sidebar-nav-item.active {
+  background: linear-gradient(135deg, var(--color-primary-900) 0%, var(--color-primary-800) 100%);
+  color: var(--color-primary-200);
+  border-color: var(--color-primary-700);
+}
+
+.dark .sidebar-nav-item.active:hover {
+  background: linear-gradient(135deg, var(--color-primary-800) 0%, var(--color-primary-700) 100%);
+}
+
+.dark .sidebar-nav-item.active .sidebar-nav-icon {
+  color: var(--color-primary-400);
+}
+
+.dark .sidebar-nav-icon {
+  color: var(--color-text-tertiary);
+}
+
+.dark .sidebar-nav-item:hover .sidebar-nav-icon {
+  color: var(--color-primary-500);
+}
+
+.dark .sidebar-nav-item:active {
+  background: var(--color-primary-800);
+  color: var(--color-primary-200);
+}
+
+/* Mobile improvements for dark mode */
+@media (hover: none) and (pointer: coarse) {
+  .dark .sidebar-nav-item:hover {
+    background: var(--color-surface);
+  }
+  
+  .dark .sidebar-nav-item:active {
+    background: var(--color-primary-800);
+    color: var(--color-primary-200);
+    transform: scale(0.98);
+  }
+}

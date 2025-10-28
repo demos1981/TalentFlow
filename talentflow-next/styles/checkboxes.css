@@ -1,0 +1,207 @@
+/* ===== ЧИСТІ ШВИДКІ ЧЕКБОКСИ ===== */
+.custom-checkbox {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.checkbox-input {
+  display: none !important;
+}
+
+.checkbox-label {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  cursor: pointer !important;
+}
+
+.checkbox-custom {
+  width: 16px !important;
+  height: 16px !important;
+  border: 2px solid #ccc !important;
+  background: #fff !important;
+  position: relative !important;
+}
+
+.checkbox-custom::after {
+  content: '✓' !important;
+  position: absolute !important;
+  top: -1px !important;
+  left: 2px !important;
+  color: #fff !important;
+  font-size: 10px !important;
+  opacity: 0 !important;
+}
+
+.checkbox-input:checked + .checkbox-label .checkbox-custom {
+  background: #7c3aed !important;
+  border-color: #7c3aed !important;
+}
+
+.checkbox-input:checked + .checkbox-label .checkbox-custom::after {
+  opacity: 1 !important;
+}
+
+.checkbox-text {
+  font-size: 14px !important;
+  color: #333 !important;
+}
+
+.dark .checkbox-custom {
+  background: #2d3748 !important;
+  border-color: #4a5568 !important;
+}
+
+.dark .checkbox-text {
+  color: #fff !important;
+}
+
+/* Додаткові специфічні селектори для календаря */
+.event-modal .custom-checkbox,
+.event-modal-overlay .custom-checkbox,
+.calendar-page .custom-checkbox,
+.fullcalendar-container .custom-checkbox,
+.modal-overlay .custom-checkbox,
+.modal .custom-checkbox {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.event-modal .checkbox-input,
+.event-modal-overlay .checkbox-input,
+.calendar-page .checkbox-input,
+.fullcalendar-container .checkbox-input,
+.modal-overlay .checkbox-input,
+.modal .checkbox-input {
+  display: none !important;
+}
+
+.event-modal .checkbox-label,
+.event-modal-overlay .checkbox-label,
+.calendar-page .checkbox-label,
+.fullcalendar-container .checkbox-label,
+.modal-overlay .checkbox-label,
+.modal .checkbox-label {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  cursor: pointer !important;
+}
+
+.event-modal .checkbox-custom,
+.event-modal-overlay .checkbox-custom,
+.calendar-page .checkbox-custom,
+.fullcalendar-container .checkbox-custom,
+.modal-overlay .checkbox-custom,
+.modal .checkbox-custom {
+  width: 16px !important;
+  height: 16px !important;
+  border: 2px solid #ccc !important;
+  background: #fff !important;
+  position: relative !important;
+}
+
+.event-modal .checkbox-custom::after,
+.event-modal-overlay .checkbox-custom::after,
+.calendar-page .checkbox-custom::after,
+.fullcalendar-container .checkbox-custom::after,
+.modal-overlay .checkbox-custom::after,
+.modal .checkbox-custom::after {
+  content: '✓' !important;
+  position: absolute !important;
+  top: -1px !important;
+  left: 2px !important;
+  color: #fff !important;
+  font-size: 10px !important;
+  opacity: 0 !important;
+}
+
+.event-modal .checkbox-input:checked + .checkbox-label .checkbox-custom,
+.event-modal-overlay .checkbox-input:checked + .checkbox-label .checkbox-custom,
+.calendar-page .checkbox-input:checked + .checkbox-label .checkbox-custom,
+.fullcalendar-container .checkbox-input:checked + .checkbox-label .checkbox-custom,
+.modal-overlay .checkbox-input:checked + .checkbox-label .checkbox-custom,
+.modal .checkbox-input:checked + .checkbox-label .checkbox-custom {
+  background: #7c3aed !important;
+  border-color: #7c3aed !important;
+}
+
+.event-modal .checkbox-input:checked + .checkbox-label .checkbox-custom::after,
+.event-modal-overlay .checkbox-input:checked + .checkbox-label .checkbox-custom::after,
+.calendar-page .checkbox-input:checked + .checkbox-label .checkbox-custom::after,
+.fullcalendar-container .checkbox-input:checked + .checkbox-label .checkbox-custom::after,
+.modal-overlay .checkbox-input:checked + .checkbox-label .checkbox-custom::after,
+.modal .checkbox-input:checked + .checkbox-label .checkbox-custom::after {
+  opacity: 1 !important;
+}
+
+.event-modal .checkbox-text,
+.event-modal-overlay .checkbox-text,
+.calendar-page .checkbox-text,
+.fullcalendar-container .checkbox-text,
+.modal-overlay .checkbox-text,
+.modal .checkbox-text {
+  font-size: 14px !important;
+  color: #333 !important;
+}
+
+/* Максимально специфічні селектори для перебиття всіх інших стилів */
+div.custom-checkbox,
+span.custom-checkbox,
+label.custom-checkbox {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+input.checkbox-input,
+input[type="checkbox"].checkbox-input {
+  display: none !important;
+}
+
+label.checkbox-label,
+.checkbox-label {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  cursor: pointer !important;
+}
+
+span.checkbox-custom,
+.checkbox-custom {
+  width: 16px !important;
+  height: 16px !important;
+  border: 2px solid #ccc !important;
+  background: #fff !important;
+  position: relative !important;
+}
+
+span.checkbox-custom::after,
+.checkbox-custom::after {
+  content: '✓' !important;
+  position: absolute !important;
+  top: -1px !important;
+  left: 2px !important;
+  color: #fff !important;
+  font-size: 10px !important;
+  opacity: 0 !important;
+}
+
+input.checkbox-input:checked + label.checkbox-label span.checkbox-custom,
+input[type="checkbox"].checkbox-input:checked + .checkbox-label .checkbox-custom {
+  background: #7c3aed !important;
+  border-color: #7c3aed !important;
+}
+
+input.checkbox-input:checked + label.checkbox-label span.checkbox-custom::after,
+input[type="checkbox"].checkbox-input:checked + .checkbox-label .checkbox-custom::after {
+  opacity: 1 !important;
+}
+
+span.checkbox-text,
+.checkbox-text {
+  font-size: 14px !important;
+  color: #333 !important;
+}
