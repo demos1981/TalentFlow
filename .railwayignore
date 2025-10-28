@@ -1,0 +1,21 @@
+# Ігноруємо фронтенд при збірці бекенду
+web/
+mobile/
+docs/
+*.md
+*.sql
+*.sh
+scripts/
+docker/
+env.example
+netlify.toml
+_redirects
+node_modules/
+.git/
+.env
+.env.local
+.env.production
+
+# Ігноруємо конфігураційні файли які можуть конфліктувати
+railway.toml
+Procfile

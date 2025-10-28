@@ -1,0 +1,19 @@
+{
+  "name": "TalentFlow",
+  "short_name": "TalentFlow",
+  "description": "AI-powered talent matching platform",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "16x16 32x32",
+      "type": "image/x-icon"
+    }
+  ]
+}
+
+
+
