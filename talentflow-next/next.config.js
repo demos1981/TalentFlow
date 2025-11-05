@@ -2,14 +2,14 @@
 const nextConfig = {
   // Ensure consistent port usage
   env: {
-    PORT: '3000',
+    PORT: "3000",
   },
   // Fix workspace root detection
   outputFileTracingRoot: __dirname,
   // Disable static export for now - use regular build
   // output: 'export',
   // trailingSlash: true,
-  
+
   // Temporarily disable ESLint during build for deployment
   eslint: {
     ignoreDuringBuilds: true,
@@ -18,43 +18,47 @@ const nextConfig = {
   experimental: {
     // Optimize package imports for HR platform
     optimizePackageImports: [
-      'lucide-react',           // Icons
-      '@fullcalendar/react',    // Calendar components
-      'framer-motion',         // Animations
-      'react-hook-form',       // Forms
-      'date-fns',              // Date utilities
-      'axios',                 // HTTP client
-      'zustand'                // State management
+      "lucide-react", // Icons
+      "@fullcalendar/react", // Calendar components
+      "framer-motion", // Animations
+      "react-hook-form", // Forms
+      "date-fns", // Date utilities
+      "axios", // HTTP client
+      "zustand", // State management
     ],
     // Optimize CSS for better performance
     optimizeCss: true,
     // Enable server components for better SEO
     // serverComponentsExternalPackages: ['@fullcalendar/core'], // Moved to serverExternalPackages
     // Optimize for HR platform specific needs
-    webVitalsAttribution: ['CLS', 'LCP'],
+    webVitalsAttribution: ["CLS", "LCP"],
   },
   // Turbopack configuration (moved from experimental.turbo)
   turbopack: {
+    root: __dirname,
+    experimental: {
+      optimizeCss: true,
+    },
     rules: {
-      '*.svg': {
-        loaders: ['@svgr/webpack'],
-        as: '*.js',
+      "*.svg": {
+        loaders: ["@svgr/webpack"],
+        as: "*.js",
       },
     },
   },
   // Optimize for faster navigation
   compiler: {
-    removeConsole: process.env.NODE_ENV === 'production',
+    removeConsole: process.env.NODE_ENV === "production",
   },
   // Enable static optimization
   trailingSlash: false,
-  
+
   // Server external packages for better performance
-  serverExternalPackages: ['@fullcalendar/core', 'pdfmake'],
+  serverExternalPackages: ["@fullcalendar/core", "pdfmake"],
   // Optimize images for static export
   images: {
     unoptimized: true,
-    formats: ['image/webp', 'image/avif'],
+    formats: ["image/webp", "image/avif"],
   },
   // Headers removed for static export compatibility
   // Optimize bundles for HR platform
@@ -67,10 +71,10 @@ const nextConfig = {
         path: false,
       };
     }
-    
+
     if (!dev && !isServer) {
       config.optimization.splitChunks = {
-        chunks: 'all',
+        chunks: "all",
         cacheGroups: {
           default: {
             minChunks: 2,
@@ -79,34 +83,34 @@ const nextConfig = {
           },
           vendor: {
             test: /[\\/]node_modules[\\/]/,
-            name: 'vendors',
+            name: "vendors",
             priority: -10,
-            chunks: 'all',
+            chunks: "all",
           },
           // HR-specific optimizations
           calendar: {
             test: /[\\/]node_modules[\\/]@fullcalendar[\\/]/,
-            name: 'calendar',
+            name: "calendar",
             priority: 10,
-            chunks: 'all',
+            chunks: "all",
           },
           forms: {
             test: /[\\/]node_modules[\\/](react-hook-form|@hookform)[\\/]/,
-            name: 'forms',
+            name: "forms",
             priority: 10,
-            chunks: 'all',
+            chunks: "all",
           },
           ui: {
             test: /[\\/]node_modules[\\/](lucide-react|framer-motion)[\\/]/,
-            name: 'ui',
+            name: "ui",
             priority: 10,
-            chunks: 'all',
+            chunks: "all",
           },
         },
       };
     }
     return config;
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

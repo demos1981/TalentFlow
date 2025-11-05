@@ -413,44 +413,44 @@
   .stats-grid {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   }
-  
+
   .interviews-filters {
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   .filters-left,
   .filters-right {
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   .search-box {
     min-width: auto;
   }
-  
+
   .detail-row {
     flex-direction: column;
     gap: 0.75rem;
   }
-  
+
   .interview-header {
     flex-direction: column;
     gap: 1rem;
   }
-  
+
   .interview-status {
     align-self: flex-start;
   }
-  
+
   .interview-actions {
     flex-direction: column;
   }
-  
+
   .action-button {
     justify-content: center;
   }
-  
+
   .actions-grid {
     grid-template-columns: 1fr;
   }
@@ -463,22 +463,22 @@
   .quick-actions {
     padding: 1rem;
   }
-  
+
   .stat-card {
     padding: 1rem;
   }
-  
+
   .stat-card {
     flex-direction: column;
     text-align: center;
     gap: 0.75rem;
   }
-  
+
   .search-box {
     flex-direction: column;
     gap: 0.5rem;
   }
-  
+
   .search-box input {
     text-align: center;
   }
@@ -493,16 +493,16 @@
     background: #1f2937;
     border-color: #374151;
   }
-  
+
   .stat-card:hover,
   .interview-card:hover {
     border-color: #6366f1;
   }
-  
+
   .stat-icon {
     background: #374151;
   }
-  
+
   .search-box,
   .filter-group select,
   .view-button,
@@ -512,15 +512,15 @@
     border-color: #4b5563;
     color: #f9fafb;
   }
-  
+
   .search-box input {
     color: #f9fafb;
   }
-  
+
   .search-box input::placeholder {
     color: #9ca3af;
   }
-  
+
   .view-button:hover,
   .action-button:hover,
   .quick-action:hover {
@@ -528,38 +528,34 @@
     border-color: #6366f1;
     color: #6366f1;
   }
-  
+
   .view-button.active {
     background: #6366f1;
     border-color: #6366f1;
     color: white;
   }
-  
+
   .add-interview-button {
     background: #6366f1;
     border-color: #6366f1;
     color: white;
   }
-  
+
   .add-interview-button:hover {
     background: #5855eb;
     border-color: #5855eb;
   }
-  
+
   .interview-notes {
     background: #374151;
   }
-  
+
   .interview-rating {
     background: #1e3a8a;
   }
-  
+
   .tag {
     background: #374151;
     color: #f9fafb;
   }
 }
-
-
-
-
