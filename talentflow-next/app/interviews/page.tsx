@@ -1,18 +1,41 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useAuthStore } from '../../stores/authStore';
-import { useLanguageStore } from '../../stores/languageStore';
-import Layout from '../../components/Layout/Layout';
-import { 
-  MessageSquare, Clock, Calendar, User, Video, Phone, MapPin, Plus, Filter, Search, 
-  MoreHorizontal, Edit, Trash2, Eye, CheckCircle, XCircle, AlertCircle, Star, 
-  CalendarDays, Briefcase, Mail, Download, Settings, FileText, UserCheck, Award
-} from 'lucide-react';
-import { interviewsApi } from '../../services/api';
-import { Interview as BackendInterview } from '../../services/interviewService';
-import './interviews.css';
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuthStore } from "../../stores/authStore";
+import { useLanguageStore } from "../../stores/languageStore";
+import Layout from "../../components/Layout/Layout";
+import {
+  MessageSquare,
+  Clock,
+  Calendar,
+  User,
+  Video,
+  Phone,
+  MapPin,
+  Plus,
+  Filter,
+  Search,
+  MoreHorizontal,
+  Edit,
+  Trash2,
+  Eye,
+  CheckCircle,
+  XCircle,
+  AlertCircle,
+  Star,
+  CalendarDays,
+  Briefcase,
+  Mail,
+  Download,
+  Settings,
+  FileText,
+  UserCheck,
+  Award,
+} from "lucide-react";
+import { interviewsApi } from "../../services/api";
+import { Interview as BackendInterview } from "../../services/interviewService";
+import "./interviews.css";
 
 interface Interview {
   id: string;
@@ -26,15 +49,30 @@ interface Interview {
   date: string;
   time: string;
   duration: number;
-  type: 'video' | 'phone' | 'in-person' | 'onsite' | 'technical' | 'behavioral' | 'final' | 'screening' | 'panel';
-  status: 'scheduled' | 'in-progress' | 'completed' | 'cancelled' | 'rescheduled' | 'no-show';
+  type:
+    | "video"
+    | "phone"
+    | "in-person"
+    | "onsite"
+    | "technical"
+    | "behavioral"
+    | "final"
+    | "screening"
+    | "panel";
+  status:
+    | "scheduled"
+    | "in-progress"
+    | "completed"
+    | "cancelled"
+    | "rescheduled"
+    | "no-show";
   location?: string;
   videoUrl?: string;
   notes?: string;
   rating?: number;
   feedback?: string;
-  stage: 'screening' | 'technical' | 'final' | 'offer';
-  priority: 'low' | 'medium' | 'high';
+  stage: "screening" | "technical" | "final" | "offer";
+  priority: "low" | "medium" | "high";
   tags: string[];
 }
 
@@ -55,13 +93,13 @@ const InterviewsPage: React.FC = () => {
     completed: 0,
     today: 0,
     thisWeek: 0,
-    thisMonth: 0
+    thisMonth: 0,
   });
-  const [selectedStatus, setSelectedStatus] = useState('all');
-  const [selectedType, setSelectedType] = useState('all');
-  const [selectedStage, setSelectedStage] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [viewMode, setViewMode] = useState<'list' | 'calendar'>('list');
+  const [selectedStatus, setSelectedStatus] = useState("all");
+  const [selectedType, setSelectedType] = useState("all");
+  const [selectedStage, setSelectedStage] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [viewMode, setViewMode] = useState<"list" | "calendar">("list");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { user } = useAuthStore();
@@ -69,73 +107,91 @@ const InterviewsPage: React.FC = () => {
   const router = useRouter();
 
   // Transform backend interview data to frontend format
-  const transformBackendInterview = (backendInterview: BackendInterview): Interview => {
+  const transformBackendInterview = (
+    backendInterview: BackendInterview
+  ): Interview => {
     const scheduledDate = new Date(backendInterview.scheduledDate);
-    const date = scheduledDate.toISOString().split('T')[0];
+    const date = scheduledDate.toISOString().split("T")[0];
     const time = scheduledDate.toTimeString().slice(0, 5);
 
     // Map backend type to frontend type
-    const typeMapping: { [key: string]: Interview['type'] } = {
-      'phone': 'phone',
-      'video': 'video',
-      'onsite': 'in-person',
-      'technical': 'technical',
-      'behavioral': 'behavioral',
-      'final': 'final',
-      'screening': 'screening',
-      'panel': 'panel'
+    const typeMapping: { [key: string]: Interview["type"] } = {
+      phone: "phone",
+      video: "video",
+      onsite: "in-person",
+      technical: "technical",
+      behavioral: "behavioral",
+      final: "final",
+      screening: "screening",
+      panel: "panel",
     };
 
     // Map backend status to frontend status
-    const statusMapping: { [key: string]: Interview['status'] } = {
-      'scheduled': 'scheduled',
-      'in-progress': 'in-progress',
-      'completed': 'completed',
-      'cancelled': 'cancelled',
-      'rescheduled': 'rescheduled',
-      'no-show': 'no-show'
+    const statusMapping: { [key: string]: Interview["status"] } = {
+      scheduled: "scheduled",
+      "in-progress": "in-progress",
+      completed: "completed",
+      cancelled: "cancelled",
+      rescheduled: "rescheduled",
+      "no-show": "no-show",
     };
 
     // Determine stage based on type
-    const stageMapping: { [key: string]: Interview['stage'] } = {
-      'screening': 'screening',
-      'technical': 'technical',
-      'final': 'final',
-      'behavioral': 'technical',
-      'panel': 'final',
-      'phone': 'screening',
-      'video': 'technical',
-      'onsite': 'final'
+    const stageMapping: { [key: string]: Interview["stage"] } = {
+      screening: "screening",
+      technical: "technical",
+      final: "final",
+      behavioral: "technical",
+      panel: "final",
+      phone: "screening",
+      video: "technical",
+      onsite: "final",
     };
 
     return {
       id: backendInterview.id,
-      candidateName: backendInterview.application?.user ? 
-        `${backendInterview.application.user.firstName || ''} ${backendInterview.application.user.lastName || ''}`.trim() :
-        'Кандидат не вказаний',
-      candidateEmail: backendInterview.application?.user?.email || '',
-      candidatePhone: backendInterview.application?.user?.phone || '',
-      jobTitle: backendInterview.application?.job?.title || backendInterview.title || 'Інтерв\'ю',
-      company: backendInterview.application?.job?.company?.name || 'Компанія не вказана',
-      interviewer: backendInterview.interviewers?.[0] ? 
-        `${backendInterview.interviewers[0].firstName} ${backendInterview.interviewers[0].lastName}` : 
-        `${backendInterview.createdBy?.firstName || ''} ${backendInterview.createdBy?.lastName || ''}`,
-      interviewerEmail: backendInterview.interviewers?.[0]?.email || backendInterview.createdBy?.email || '',
+      candidateName: backendInterview.application?.user
+        ? `${backendInterview.application.user.firstName || ""} ${
+            backendInterview.application.user.lastName || ""
+          }`.trim()
+        : "Кандидат не вказаний",
+      candidateEmail: backendInterview.application?.user?.email || "",
+      candidatePhone: backendInterview.application?.user?.phone || "",
+      jobTitle:
+        backendInterview.application?.job?.title ||
+        backendInterview.title ||
+        "Інтерв'ю",
+      company:
+        backendInterview.application?.job?.company?.name ||
+        "Компанія не вказана",
+      interviewer: backendInterview.interviewers?.[0]
+        ? `${backendInterview.interviewers[0].firstName} ${backendInterview.interviewers[0].lastName}`
+        : `${backendInterview.createdBy?.firstName || ""} ${
+            backendInterview.createdBy?.lastName || ""
+          }`,
+      interviewerEmail:
+        backendInterview.interviewers?.[0]?.email ||
+        backendInterview.createdBy?.email ||
+        "",
       date,
       time,
       duration: backendInterview.duration,
-      type: typeMapping[backendInterview.type] || 'video',
-      status: statusMapping[backendInterview.status] || 'scheduled',
+      type: typeMapping[backendInterview.type] || "video",
+      status: statusMapping[backendInterview.status] || "scheduled",
       location: backendInterview.location,
       videoUrl: backendInterview.meetingLink,
       notes: backendInterview.notes,
       rating: backendInterview.overallRating,
       feedback: backendInterview.feedback,
-      stage: stageMapping[backendInterview.type] || 'technical',
-      priority: backendInterview.overallRating ? 
-        (backendInterview.overallRating >= 4 ? 'high' : backendInterview.overallRating >= 3 ? 'medium' : 'low') : 
-        'medium',
-      tags: [] // We'll need to get tags from job requirements or candidate skills
+      stage: stageMapping[backendInterview.type] || "technical",
+      priority: backendInterview.overallRating
+        ? backendInterview.overallRating >= 4
+          ? "high"
+          : backendInterview.overallRating >= 3
+          ? "medium"
+          : "low"
+        : "medium",
+      tags: [], // We'll need to get tags from job requirements or candidate skills
     };
   };
 
@@ -147,52 +203,67 @@ const InterviewsPage: React.FC = () => {
 
       // Check if user is authenticated
       if (!user) {
-        console.warn('User not authenticated, skipping interviews load');
+        console.warn("User not authenticated, skipping interviews load");
         setInterviews([]);
         setIsLoading(false);
         return;
       }
 
-      console.log('Loading interviews for user:', user.id);
+      console.log("Loading interviews for user:", user.id);
 
       // Load interviews
       const interviewsResponse = await interviewsApi.getInterviews({
         search: searchQuery || undefined,
-        status: selectedStatus !== 'all' ? selectedStatus : undefined,
-        type: selectedType !== 'all' ? selectedType : undefined,
+        status: selectedStatus !== "all" ? selectedStatus : undefined,
+        type: selectedType !== "all" ? selectedType : undefined,
         page: 1,
         limit: 50,
-        sortBy: 'scheduledDate',
-        sortOrder: 'ASC'
+        sortBy: "scheduledDate",
+        sortOrder: "ASC",
       });
 
-      console.log('Interviews API Response:', interviewsResponse);
-      console.log('Interviews data:', interviewsResponse.data);
-      console.log('Interviews data.data:', interviewsResponse.data?.data);
-      console.log('Interviews data.data.interviews:', interviewsResponse.data?.data?.interviews);
-      console.log('Full response structure:', JSON.stringify(interviewsResponse.data, null, 2));
+      console.log("Interviews API Response:", interviewsResponse);
+      console.log("Interviews data:", interviewsResponse.data);
+      console.log("Interviews data.data:", interviewsResponse.data?.data);
+      console.log(
+        "Interviews data.data.interviews:",
+        interviewsResponse.data?.data?.interviews
+      );
+      console.log(
+        "Full response structure:",
+        JSON.stringify(interviewsResponse.data, null, 2)
+      );
 
       // Check if the response structure is correct
       const interviewsData = interviewsResponse.data?.data?.interviews;
       if (!interviewsData) {
-        console.warn('No interviews data found in response:', interviewsResponse);
+        console.warn(
+          "No interviews data found in response:",
+          interviewsResponse
+        );
         setInterviews([]);
       } else {
-        console.log('Raw interviews data:', interviewsData);
-        const transformedInterviews = interviewsData.map(transformBackendInterview);
-        console.log('Transformed interviews:', transformedInterviews);
+        console.log("Raw interviews data:", interviewsData);
+        const transformedInterviews = interviewsData.map(
+          transformBackendInterview
+        );
+        console.log("Transformed interviews:", transformedInterviews);
         setInterviews(transformedInterviews);
       }
 
       // Load stats
       const statsResponse = await interviewsApi.getStats();
-      console.log('Stats API Response:', statsResponse);
-      
+      console.log("Stats API Response:", statsResponse);
+
       // Calculate today's interviews
       const today = new Date();
-      const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      const todayStart = new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate()
+      );
       const todayEnd = new Date(todayStart.getTime() + 24 * 60 * 60 * 1000);
-      
+
       const currentInterviews = interviewsData || [];
       const todayInterviews = currentInterviews.filter((interview: any) => {
         const interviewDate = new Date(interview.scheduledDate);
@@ -203,21 +274,23 @@ const InterviewsPage: React.FC = () => {
       const statsData = statsResponse.data?.data;
       setInterviewStats({
         total: statsData?.totalInterviews || 0,
-        scheduled: statsData?.interviewsByStatus?.find((s: any) => s.status === 'scheduled')?.count || 0,
+        scheduled:
+          statsData?.interviewsByStatus?.find(
+            (s: any) => s.status === "scheduled"
+          )?.count || 0,
         completed: statsData?.completedInterviews || 0,
         today: todayInterviews,
         thisWeek: 0, // We'll calculate this if needed
-        thisMonth: 0 // We'll calculate this if needed
+        thisMonth: 0, // We'll calculate this if needed
       });
-
     } catch (error: any) {
-      console.error('Error loading interviews:', error);
-      console.error('Error details:', {
+      console.error("Error loading interviews:", error);
+      console.error("Error details:", {
         message: error?.message,
         stack: error?.stack,
-        response: error?.response?.data
+        response: error?.response?.data,
       });
-      setError('Помилка завантаження інтерв\'ю. Спробуйте пізніше.');
+      setError("Помилка завантаження інтерв'ю. Спробуйте пізніше.");
     } finally {
       setIsLoading(false);
     }
@@ -242,77 +315,81 @@ const InterviewsPage: React.FC = () => {
   }, [searchQuery, user]);
 
   const statuses = [
-    { id: 'all', name: t('allStatuses'), icon: <MessageSquare size={16} /> },
-    { id: 'scheduled', name: t('scheduled'), icon: <Clock size={16} /> },
-    { id: 'completed', name: t('completed'), icon: <CheckCircle size={16} /> },
-    { id: 'cancelled', name: t('cancelled'), icon: <XCircle size={16} /> },
-    { id: 'rescheduled', name: t('rescheduled'), icon: <AlertCircle size={16} /> },
-    { id: 'in-progress', name: t('inProgress'), icon: <Clock size={16} /> }
+    { id: "all", name: t("allStatuses"), icon: <MessageSquare size={16} /> },
+    { id: "scheduled", name: t("scheduled"), icon: <Clock size={16} /> },
+    { id: "completed", name: t("completed"), icon: <CheckCircle size={16} /> },
+    { id: "cancelled", name: t("cancelled"), icon: <XCircle size={16} /> },
+    {
+      id: "rescheduled",
+      name: t("rescheduled"),
+      icon: <AlertCircle size={16} />,
+    },
+    { id: "in-progress", name: t("inProgress"), icon: <Clock size={16} /> },
   ];
 
   const types = [
-    { id: 'all', name: t('allTypes') },
-    { id: 'phone', name: t('phone') },
-    { id: 'video', name: t('video') },
-    { id: 'in-person', name: t('inPerson') },
-    { id: 'technical', name: t('technical') },
-    { id: 'screening', name: t('screening') },
-    { id: 'final', name: t('final') }
+    { id: "all", name: t("allTypes") },
+    { id: "phone", name: t("phone") },
+    { id: "video", name: t("video") },
+    { id: "in-person", name: t("inPerson") },
+    { id: "technical", name: t("technical") },
+    { id: "screening", name: t("screening") },
+    { id: "final", name: t("final") },
   ];
 
   const stages = [
-    { id: 'all', name: t('allStages') },
-    { id: 'screening', name: t('screening') },
-    { id: 'technical', name: t('technical') },
-    { id: 'final', name: t('final') },
-    { id: 'offer', name: t('offer') }
+    { id: "all", name: t("allStages") },
+    { id: "screening", name: t("screening") },
+    { id: "technical", name: t("technical") },
+    { id: "final", name: t("final") },
+    { id: "offer", name: t("offer") },
   ];
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'scheduled':
-        return 'status-scheduled';
-      case 'completed':
-        return 'status-completed';
-      case 'cancelled':
-        return 'status-cancelled';
-      case 'rescheduled':
-        return 'status-rescheduled';
-      case 'in-progress':
-        return 'status-scheduled';
-      case 'no-show':
-        return 'status-cancelled';
+      case "scheduled":
+        return "status-scheduled";
+      case "completed":
+        return "status-completed";
+      case "cancelled":
+        return "status-cancelled";
+      case "rescheduled":
+        return "status-rescheduled";
+      case "in-progress":
+        return "status-scheduled";
+      case "no-show":
+        return "status-cancelled";
       default:
-        return 'status-scheduled';
+        return "status-scheduled";
     }
   };
 
   const getStatusText = (status: string) => {
     switch (status) {
-      case 'scheduled':
-        return t('scheduled');
-      case 'completed':
-        return t('completed');
-      case 'cancelled':
-        return t('cancelled');
-      case 'rescheduled':
-        return t('rescheduled');
-      case 'in-progress':
-        return t('inProgress');
-      case 'no-show':
-        return t('noShow');
+      case "scheduled":
+        return t("scheduled");
+      case "completed":
+        return t("completed");
+      case "cancelled":
+        return t("cancelled");
+      case "rescheduled":
+        return t("rescheduled");
+      case "in-progress":
+        return t("inProgress");
+      case "no-show":
+        return t("noShow");
       default:
-        return t('unknown');
+        return t("unknown");
     }
   };
 
   const getTypeIcon = (type: string) => {
     switch (type) {
-      case 'video':
+      case "video":
         return <Video className="icon" size={16} />;
-      case 'phone':
+      case "phone":
         return <Phone className="icon" size={16} />;
-      case 'in-person':
+      case "in-person":
         return <User className="icon" size={16} />;
       default:
         return <MessageSquare className="icon" size={16} />;
@@ -321,37 +398,37 @@ const InterviewsPage: React.FC = () => {
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'high':
-        return 'priority-high';
-      case 'medium':
-        return 'priority-medium';
-      case 'low':
-        return 'priority-low';
+      case "high":
+        return "priority-high";
+      case "medium":
+        return "priority-medium";
+      case "low":
+        return "priority-low";
       default:
-        return 'priority-default';
+        return "priority-default";
     }
   };
 
   const getPriorityText = (priority: string) => {
     switch (priority) {
-      case 'high':
-        return t('high');
-      case 'medium':
-        return t('medium');
-      case 'low':
-        return t('low');
+      case "high":
+        return t("high");
+      case "medium":
+        return t("medium");
+      case "low":
+        return t("low");
       default:
-        return t('unknown');
+        return t("unknown");
     }
   };
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('uk-UA', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+    return date.toLocaleDateString("uk-UA", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
   };
 
@@ -368,17 +445,17 @@ const InterviewsPage: React.FC = () => {
   };
 
   const handleAddInterview = () => {
-    router.push('/interviews/new');
+    router.push("/interviews/new");
   };
 
   const handleDeleteInterview = async (interviewId: string) => {
-    if (window.confirm('Ви впевнені, що хочете видалити це інтерв\'ю?')) {
+    if (window.confirm("Ви впевнені, що хочете видалити це інтерв'ю?")) {
       try {
         await interviewsApi.deleteInterview(interviewId);
         await loadInterviews(); // Reload the list
       } catch (error) {
-        console.error('Error deleting interview:', error);
-        alert('Помилка видалення інтерв\'ю. Спробуйте пізніше.');
+        console.error("Error deleting interview:", error);
+        alert("Помилка видалення інтерв'ю. Спробуйте пізніше.");
       }
     }
   };
@@ -388,8 +465,8 @@ const InterviewsPage: React.FC = () => {
       await interviewsApi.updateStatus(interviewId, { status: newStatus });
       await loadInterviews(); // Reload the list
     } catch (error) {
-      console.error('Error updating interview status:', error);
-      alert('Помилка оновлення статусу. Спробуйте пізніше.');
+      console.error("Error updating interview status:", error);
+      alert("Помилка оновлення статусу. Спробуйте пізніше.");
     }
   };
 
@@ -397,7 +474,7 @@ const InterviewsPage: React.FC = () => {
     return (
       <Layout>
         <div className="interviews-page">
-          <div className="loading-spinner">{t('loading')}...</div>
+          <div className="loading-spinner">{t("loading")}...</div>
         </div>
       </Layout>
     );
@@ -407,26 +484,29 @@ const InterviewsPage: React.FC = () => {
     return (
       <Layout>
         <div className="interviews-page">
-          <div className="error-message" style={{ 
-            padding: '20px', 
-            textAlign: 'center', 
-            color: '#dc2626',
-            backgroundColor: '#fef2f2',
-            border: '1px solid #fecaca',
-            borderRadius: '8px',
-            margin: '20px'
-          }}>
+          <div
+            className="error-message"
+            style={{
+              padding: "20px",
+              textAlign: "center",
+              color: "#dc2626",
+              backgroundColor: "#fef2f2",
+              border: "1px solid #fecaca",
+              borderRadius: "8px",
+              margin: "20px",
+            }}
+          >
             <p>{error}</p>
-            <button 
+            <button
               onClick={loadInterviews}
               style={{
-                marginTop: '10px',
-                padding: '8px 16px',
-                backgroundColor: '#dc2626',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer'
+                marginTop: "10px",
+                padding: "8px 16px",
+                backgroundColor: "#dc2626",
+                color: "white",
+                border: "none",
+                borderRadius: "4px",
+                cursor: "pointer",
               }}
             >
               Спробувати знову
@@ -442,12 +522,12 @@ const InterviewsPage: React.FC = () => {
       <div className="interviews-page">
         <div className="interviews-header">
           <div className="interviews-header-content">
-            <h1>{t('interviews')}</h1>
-            <p>{t('interviewPlanningAndManagement')}</p>
+            <h1>{t("interviews")}</h1>
+            <p>{t("interviewPlanningAndManagement")}</p>
           </div>
           <button className="add-interview-btn" onClick={handleAddInterview}>
             <Plus className="icon" />
-            {t('addInterview')}
+            {t("addInterview")}
           </button>
         </div>
 
@@ -460,7 +540,7 @@ const InterviewsPage: React.FC = () => {
               </div>
               <div className="stat-content">
                 <h3>{interviewStats.total}</h3>
-                <p>{t('totalInterviews')}</p>
+                <p>{t("totalInterviews")}</p>
               </div>
             </div>
             <div className="stat-card">
@@ -469,7 +549,7 @@ const InterviewsPage: React.FC = () => {
               </div>
               <div className="stat-content">
                 <h3>{interviewStats.scheduled}</h3>
-                <p>{t('scheduled')}</p>
+                <p>{t("scheduled")}</p>
               </div>
             </div>
             <div className="stat-card">
@@ -478,7 +558,7 @@ const InterviewsPage: React.FC = () => {
               </div>
               <div className="stat-content">
                 <h3>{interviewStats.completed}</h3>
-                <p>{t('completed')}</p>
+                <p>{t("completed")}</p>
               </div>
             </div>
             <div className="stat-card">
@@ -487,7 +567,7 @@ const InterviewsPage: React.FC = () => {
               </div>
               <div className="stat-content">
                 <h3>{interviewStats.today}</h3>
-                <p>{t('today')}</p>
+                <p>{t("today")}</p>
               </div>
             </div>
           </div>
@@ -501,7 +581,7 @@ const InterviewsPage: React.FC = () => {
               <input
                 type="text"
                 className="search-input"
-                placeholder={t('searchCandidatesPositions')}
+                placeholder={t("searchCandidatesPositions")}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -510,10 +590,10 @@ const InterviewsPage: React.FC = () => {
 
           <div className="filters-right">
             <div className="filter-group">
-              <label>{t('status')}:</label>
-              <select 
+              <label>{t("status")}:</label>
+              <select
                 className="filter-select"
-                value={selectedStatus} 
+                value={selectedStatus}
                 onChange={(e) => setSelectedStatus(e.target.value)}
               >
                 {statuses.map((status) => (
@@ -525,10 +605,10 @@ const InterviewsPage: React.FC = () => {
             </div>
 
             <div className="filter-group">
-              <label>{t('type')}:</label>
-              <select 
+              <label>{t("type")}:</label>
+              <select
                 className="filter-select"
-                value={selectedType} 
+                value={selectedType}
                 onChange={(e) => setSelectedType(e.target.value)}
               >
                 {types.map((type) => (
@@ -540,10 +620,10 @@ const InterviewsPage: React.FC = () => {
             </div>
 
             <div className="filter-group">
-              <label>{t('stage')}:</label>
-              <select 
+              <label>{t("stage")}:</label>
+              <select
                 className="filter-select"
-                value={selectedStage} 
+                value={selectedStage}
                 onChange={(e) => setSelectedStage(e.target.value)}
               >
                 {stages.map((stage) => (
@@ -556,16 +636,18 @@ const InterviewsPage: React.FC = () => {
 
             <div className="view-controls">
               <button
-                className={`view-button ${viewMode === 'list' ? 'active' : ''}`}
-                onClick={() => setViewMode('list')}
+                className={`view-button ${viewMode === "list" ? "active" : ""}`}
+                onClick={() => setViewMode("list")}
               >
-                {t('list')}
+                {t("list")}
               </button>
               <button
-                className={`view-button ${viewMode === 'calendar' ? 'active' : ''}`}
-                onClick={() => setViewMode('calendar')}
+                className={`view-button ${
+                  viewMode === "calendar" ? "active" : ""
+                }`}
+                onClick={() => setViewMode("calendar")}
               >
-                {t('calendar')}
+                {t("calendar")}
               </button>
             </div>
           </div>
@@ -576,80 +658,109 @@ const InterviewsPage: React.FC = () => {
           {interviews.length === 0 ? (
             <div className="empty-state">
               <Calendar size={48} />
-              <h3>{t('noInterviews')}</h3>
-              <p>{t('noScheduledInterviews')}</p>
-              <button className="add-interview-btn" onClick={handleAddInterview}>
+              <h3>{t("noInterviews")}</h3>
+              <p>{t("noScheduledInterviews")}</p>
+              <button
+                className="add-interview-btn-plan"
+                onClick={handleAddInterview}
+              >
                 <Plus className="icon" />
-                {t('addInterview')}
+                {/* {t("addInterview")} */}
               </button>
             </div>
           ) : (
             interviews.map((interview) => (
-            <div key={interview.id} className="interview-card">
-              <div className="interview-header">
-                <div className="interview-info">
-                  <h3>{interview.candidateName}</h3>
-                  <p className="job-title">{interview.jobTitle} • {interview.company}</p>
-                </div>
-                <div className="interview-status">
-                  <span className={`status-badge ${getStatusColor(interview.status)}`}>
-                    {getStatusText(interview.status)}
-                  </span>
-                  <span className={`priority-badge ${getPriorityColor(interview.priority)}`}>
-                    {getPriorityText(interview.priority)}
-                  </span>
-                </div>
-              </div>
-
-              <div className="interview-details">
-                <div className="detail-row">
-                  <div className="detail-item">
-                    <Calendar className="icon" size={16} />
-                    <span>{formatDate(interview.date)}</span>
+              <div key={interview.id} className="interview-card">
+                <div className="interview-header">
+                  <div className="interview-info">
+                    <h3>{interview.candidateName}</h3>
+                    <p className="job-title">
+                      {interview.jobTitle} • {interview.company}
+                    </p>
                   </div>
-                  <div className="detail-item">
-                    <Clock className="icon" size={16} />
-                    <span>{formatTime(interview.time)} ({interview.duration} хв)</span>
-                  </div>
-                </div>
-                <div className="detail-row">
-                  <div className="detail-item">
-                    {getTypeIcon(interview.type)}
-                    <span>
-                      {interview.type === 'video' ? t('video') : 
-                       interview.type === 'phone' ? t('phone') : 
-                       interview.type === 'in-person' ? t('inPerson') : 
-                       interview.type === 'technical' ? t('technical') :
-                       interview.type === 'behavioral' ? t('behavioral') :
-                       interview.type === 'final' ? t('final') :
-                       interview.type === 'screening' ? t('screening') :
-                       interview.type === 'panel' ? t('panel') : interview.type}
+                  <div className="interview-status">
+                    <span
+                      className={`status-badge ${getStatusColor(
+                        interview.status
+                      )}`}
+                    >
+                      {getStatusText(interview.status)}
+                    </span>
+                    <span
+                      className={`priority-badge ${getPriorityColor(
+                        interview.priority
+                      )}`}
+                    >
+                      {getPriorityText(interview.priority)}
                     </span>
                   </div>
-                  <div className="detail-item">
-                    <User className="icon" size={16} />
-                    <span>{interview.interviewer}</span>
-                  </div>
                 </div>
-                {interview.type === 'in-person' && interview.location && (
+
+                <div className="interview-details">
                   <div className="detail-row">
                     <div className="detail-item">
-                      <MapPin className="icon" size={16} />
-                      <span>{interview.location}</span>
+                      <Calendar className="icon" size={16} />
+                      <span>{formatDate(interview.date)}</span>
+                    </div>
+                    <div className="detail-item">
+                      <Clock className="icon" size={16} />
+                      <span>
+                        {formatTime(interview.time)} ({interview.duration} хв)
+                      </span>
                     </div>
                   </div>
-                )}
-                {interview.type === 'video' && interview.videoUrl && (
                   <div className="detail-row">
                     <div className="detail-item">
-                      <Video className="icon" size={16} />
-                      <a href={interview.videoUrl} target="_blank" rel="noopener noreferrer" className="video-link">
-                        {t('joinVideoCall')}
-                      </a>
+                      {getTypeIcon(interview.type)}
+                      <span>
+                        {interview.type === "video"
+                          ? t("video")
+                          : interview.type === "phone"
+                          ? t("phone")
+                          : interview.type === "in-person"
+                          ? t("inPerson")
+                          : interview.type === "technical"
+                          ? t("technical")
+                          : interview.type === "behavioral"
+                          ? t("behavioral")
+                          : interview.type === "final"
+                          ? t("final")
+                          : interview.type === "screening"
+                          ? t("screening")
+                          : interview.type === "panel"
+                          ? t("panel")
+                          : interview.type}
+                      </span>
+                    </div>
+                    <div className="detail-item">
+                      <User className="icon" size={16} />
+                      <span>{interview.interviewer}</span>
                     </div>
                   </div>
-                )}
-              </div>
+                  {interview.type === "in-person" && interview.location && (
+                    <div className="detail-row">
+                      <div className="detail-item">
+                        <MapPin className="icon" size={16} />
+                        <span>{interview.location}</span>
+                      </div>
+                    </div>
+                  )}
+                  {interview.type === "video" && interview.videoUrl && (
+                    <div className="detail-row">
+                      <div className="detail-item">
+                        <Video className="icon" size={16} />
+                        <a
+                          href={interview.videoUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="video-link"
+                        >
+                          {t("joinVideoCall")}
+                        </a>
+                      </div>
+                    </div>
+                  )}
+                </div>
 
                 {interview.notes && (
                   <div className="interview-notes">
@@ -660,35 +771,37 @@ const InterviewsPage: React.FC = () => {
                 {interview.tags.length > 0 && (
                   <div className="interview-tags">
                     {interview.tags.map((tag) => (
-                      <span key={tag} className="tag">{tag}</span>
+                      <span key={tag} className="tag">
+                        {tag}
+                      </span>
                     ))}
                   </div>
                 )}
 
-              <div className="interview-actions">
-                <button 
-                  className="action-button view"
-                  onClick={() => handleViewInterview(interview.id)}
-                >
-                  <Eye className="icon" size={16} />
-                  <span>{t('viewInterview')}</span>
-                </button>
-                <button 
-                  className="action-button edit"
-                  onClick={() => handleEditInterview(interview.id)}
-                >
-                  <Edit className="icon" size={16} />
-                  <span>{t('editInterview')}</span>
-                </button>
-                <button className="action-button notify">
-                  <MessageSquare className="icon" size={16} />
-                  <span>{t('notify')}</span>
-                </button>
-                <button className="action-button more">
-                  <MoreHorizontal className="icon" size={16} />
-                </button>
+                <div className="interview-actions">
+                  <button
+                    className="action-button view"
+                    onClick={() => handleViewInterview(interview.id)}
+                  >
+                    <Eye className="icon" size={16} />
+                    <span>{t("viewInterview")}</span>
+                  </button>
+                  <button
+                    className="action-button edit"
+                    onClick={() => handleEditInterview(interview.id)}
+                  >
+                    <Edit className="icon" size={16} />
+                    <span>{t("editInterview")}</span>
+                  </button>
+                  <button className="action-button notify">
+                    <MessageSquare className="icon" size={16} />
+                    <span>{t("notify")}</span>
+                  </button>
+                  <button className="action-button more">
+                    <MoreHorizontal className="icon" size={16} />
+                  </button>
+                </div>
               </div>
-            </div>
             ))
           )}
         </div>
