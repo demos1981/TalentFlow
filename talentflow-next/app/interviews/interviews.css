@@ -643,7 +643,7 @@
 .empty-state .icon {
   width: 64px;
   height: 64px;
-  color: var(--color-text-tertiary);
+  color: var(--color-primary-500);
   margin-bottom: var(--space-4);
 }
 
